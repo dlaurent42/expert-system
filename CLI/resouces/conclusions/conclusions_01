@@ -1,0 +1,11 @@
+# RULES
+B => A 
+C => A 
+
+# INITIAL FACTS
+?A 
+
+# QUERIES
+=
+
+# EXPECTED RESULT: A should be false. 

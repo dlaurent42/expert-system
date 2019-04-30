@@ -1,0 +1,12 @@
+# RULES
+B + C => A 
+D ^ E => B 
+B => C 
+
+# INITIAL FACTS
+?A 
+
+# QUERIES
+=E
+
+# EXPECTED RESULT: A should be true. 
