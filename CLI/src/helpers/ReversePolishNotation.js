@@ -78,7 +78,7 @@ const evaluateRPN = (brutRule, values) => {
 
   // Copy input rule
   const rule = brutRule.map(el => ((isToken(el)) ? values[el] : el));
-
+  console.log(rule);
   // Solving loop
   while (rule.length > 1) {
 
@@ -87,14 +87,16 @@ const evaluateRPN = (brutRule, values) => {
     while (idx < rule.length) {
 
       // Check if there is a negation
-      if (isToken(rule[idx]) && rule[idx + 1] === '!') {
+      if (typeof rule[idx] === 'boolean' && rule[idx + 1] === '!') {
+
+        console.log('Negation found');
         rule[idx] = !rule[idx + 1];
         rule.splice(idx + 1, 1);
         break;
 
       // Check if there is an operator
-      } else if (isToken(rule[idx]) && isToken(rule[idx + 1]) && !isToken(rule[idx + 2])) {
-
+      } else if (typeof rule[idx] === 'boolean' && typeof rule[idx + 1] === 'boolean' && typeof rule[idx + 2] !== 'boolean') {
+        console.log('Operator found');
         if (rule[idx + 2] === '|') rule[idx] = rule[idx] || rule[idx + 1];
         else if (rule[idx + 2] === '+') rule[idx] = rule[idx] && rule[idx + 1];
         else if (rule[idx + 2] === '^') {
@@ -102,7 +104,10 @@ const evaluateRPN = (brutRule, values) => {
         } else console.log(`Euuuuuh... ${rule[idx + 2]}`);
         rule.splice(idx + 1, 2);
         break;
-      } else idx += 1;
+      } else {
+        console.log('Other');
+        idx += 1;
+      }
     }
   }
   return rule[0];

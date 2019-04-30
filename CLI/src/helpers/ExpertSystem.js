@@ -123,7 +123,6 @@ class ExpertSystem {
             verticesInvolved: RPN.uniqueTokens,
             visited: true,
             isNegative,
-            cost: 1,
           });
         });
       }
@@ -142,20 +141,20 @@ class ExpertSystem {
     });
 
     // Create graph edges
-    this.rules.forEach((rule) => {
-      this.Graph.addEdge(rule);
+    this.rules.forEach((rule, idx) => {
+      this.Graph.addEdge(Object.assign(rule, { id: idx }));
     });
   }
 
   // Method used to assess priorization level for a given edge
-  static edgePriorization(edge, vertices) {
+  static edgePriorization(edges, edge, vertices) {
 
     // Variable containing priorization
     let priorization = 0;
 
     // For each vertex involved, if vertex value is undefined, then we add 1
     edge.verticesInvolved.forEach((vertex) => {
-      priorization += (vertices[vertex] === undefined);
+      priorization += (vertices[vertex] === undefined) + edges[vertex].length;
     });
 
     return priorization;
@@ -186,9 +185,9 @@ class ExpertSystem {
       const availableQueue = cloneDeep(this.Graph.edges);
       const closedQueue = [];
       const verticesValues = cloneDeep(this.Graph.vertices);
-      console.log(`Initialisation of Priority queue for ${query}`);
+      console.log(`\n\nInitialisation of Priority queue for ${query}`);
       availableQueue[query].forEach((edge) => {
-        SolvingQueue.enqueueElement(edge, this.constructor.edgePriorization(edge, verticesValues));
+        SolvingQueue.enqueueElement(edge, this.constructor.edgePriorization(this.Graph.edges, edge, verticesValues));
       });
 
       // Remove elements from available queue
@@ -197,30 +196,59 @@ class ExpertSystem {
       // Solving loop
       while (SolvingQueue.items.length) {
 
+        console.log('\nEntering loop');
+        console.log(`Solving queue: ${JSON.stringify(SolvingQueue.items)}`);
+        console.log(`Available queue: ${JSON.stringify(availableQueue)}`);
+
         // Get first element from open set
         const { element, priority } = SolvingQueue.dequeueElement();
 
         // Verify priority level
         if (priority === 0) {
 
+          console.log(`Priority equal 0 for rule with id ${element.id}`);
           // Priority level equal 0 means there is no unknown node
 
-          // Assess RPN
-          verticesValues[element.assignedTo] = evaluateRPN(element.rpnOperation, verticesValues);
+          // CHECK IF THERE IS ANY AVAILABLE RULE FOR INVOLVED VERTICES
+          let rulesForInvolvedVertices = false;
+          element.verticesInvolved.forEach((vertice) => {
+            if (availableQueue[vertice].length) rulesForInvolvedVertices = true;
+            availableQueue[vertice].forEach((edge) => {
+              SolvingQueue.enqueueElement(edge, this.constructor.edgePriorization(this.Graph.edges, edge, verticesValues));
+            });
+            availableQueue[vertice] = [];
+          });
 
-          // Move to closeSet current edge
-          closedQueue.push(element);
+          // If involved vertices have rules, we break
+          if (rulesForInvolvedVertices) {
+            console.log('New rules to evaluate');
+          } else {
 
-          // Delete from Solving Queue any element where assignedTo = el.assignedTo
-          remove(SolvingQueue.items, elem => element.assignedTo === elem.assignedTo);
+            // It is ok, move on
+            console.log('It is ok, move on');
 
-          // If the rule is assigned to query, then solution is found
-          if (element.assignedTo === query) {
-            this.solutions.push({ [query]: verticesValues[element.assignedTo] });
+            // Assess RPN
+            console.log('... Entering evaluateRPN');
+            const value = evaluateRPN(element.rpnOperation, verticesValues);
+            verticesValues[element.assignedTo] = (element.isNegative) ? !value : value;
+            console.log(`... evualateRPN has return ${verticesValues[element.assignedTo]}`);
+
+            // Move to closeSet current edge
+            closedQueue.push(element);
+
+            // Delete from Solving Queue any element where assignedTo = el.assignedTo
+            remove(SolvingQueue.items, elem => element.assignedTo === elem.element.assignedTo);
+            console.log('\nIn loop');
+            console.log(`Solving queue: ${JSON.stringify(SolvingQueue.items)}`);
+            // If the rule is assigned to query, then solution is found
+            if (element.assignedTo === query) {
+              console.log(`Solution found for ${query}`);
+              this.solutions.push({ [query]: verticesValues[element.assignedTo] });
+            }
           }
+        } else if (priority > 0) {
 
-        } else {
-
+          console.log(`Priority gt 0 for rule with id ${element.id}`);
           // Priority level gt 0 means there is at least 1 unknown node
 
           // Check for each unknown node if there is at leat 1 edge
@@ -231,10 +259,12 @@ class ExpertSystem {
             if (verticesValues[vertice] === undefined && availableQueue[vertice].length === 0) {
               this.solutions.push({ [query]: 'No enough data.' });
               error = true;
+              console.log(`... ${vertice} has no solution, there is an error`);
 
             // If node has at least a rule to assess its value,
             // its rules are pushed to solving queue and removed from available queue
             } else if (verticesValues[vertice] === undefined && availableQueue[vertice].length) {
+              console.log(`... ${vertice} has solutions, moving rules from available queue to solving queue`);
               availableQueue[vertice].forEach((edge) => {
                 SolvingQueue.enqueueElement(edge, this.constructor.edgePriorization(edge, verticesValues));
               });
@@ -243,8 +273,14 @@ class ExpertSystem {
           });
           if (error) break;
         }
+        console.log('\nExiting loop');
+        console.log(`Solving queue: ${JSON.stringify(SolvingQueue.items)}`);
+        console.log(`Available queue: ${JSON.stringify(availableQueue)}`);
       }
     });
+
+    console.log('SOLUTIONS');
+    console.log(this.solutions);
   }
 
   // Method used for debug purpose
