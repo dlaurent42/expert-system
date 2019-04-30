@@ -8,10 +8,10 @@ L + M => K
 O + P => L + N 
 N => M 
 
-# INITIAL FACTS
+# QUERIES
 ?AFKP 
 
-# QUERIES
+# INITIAL FACTS
 =DEIJOP
 
 # EXPECTED RESULT: AFKP is true.

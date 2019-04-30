@@ -2,10 +2,10 @@
 A | B + C => E 
 (F | G) + H => E 
 
-# INITIAL FACTS
+# QUERIES
 ?E 
 
-# QUERIES
+# INITIAL FACTS
 =
 
 # EXPECTED RESULT: E should be false.

@@ -3,10 +3,10 @@ B + C => A
 D ^ E => B 
 B => C 
 
-# INITIAL FACTS
+# QUERIES
 ?A 
 
-# QUERIES
+# INITIAL FACTS
 =
 
 # EXPECTED RESULT: A should be false. 

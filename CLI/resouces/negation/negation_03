@@ -1,10 +1,10 @@
 # RULES
 B + !C => A 
 
-# INITIAL FACTS
+# QUERIES
 ?A 
 
-# QUERIES
+# INITIAL FACTS
 =C
 
 # EXPECTED RESULT: A should be false. 
