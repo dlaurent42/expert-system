@@ -135,14 +135,15 @@ class ExpertSystem {
 
     // Create graph vertices
     this.vertices.forEach((vertex) => {
+      console.log(`Adding: ${vertex}`);
       if (this.initialFacts.includes(vertex)) this.Graph.addVertex(vertex, true);
       else if (this.queries.includes(vertex)) this.Graph.addVertex(vertex, undefined);
       else this.Graph.addVertex(vertex, false);
     });
 
     // Create graph edges
-    this.rules.forEach((rule, idx) => {
-      this.Graph.addEdge(Object.assign(rule, { id: idx }));
+    this.rules.forEach((rule) => {
+      this.Graph.addEdge(rule);
     });
   }
 
@@ -187,7 +188,7 @@ class ExpertSystem {
       const verticesValues = cloneDeep(this.Graph.vertices);
       console.log(`Initialisation of Priority queue for ${query}`);
       availableQueue[query].forEach((edge) => {
-        SolvingQueue.enqueueElement(edge, this.edgePriorization(edge, verticesValues));
+        SolvingQueue.enqueueElement(edge, this.constructor.edgePriorization(edge, verticesValues));
       });
 
       // Remove elements from available queue
@@ -235,7 +236,7 @@ class ExpertSystem {
             // its rules are pushed to solving queue and removed from available queue
             } else if (verticesValues[vertice] === undefined && availableQueue[vertice].length) {
               availableQueue[vertice].forEach((edge) => {
-                SolvingQueue.enqueueElement(edge, this.edgePriorization(edge, verticesValues));
+                SolvingQueue.enqueueElement(edge, this.constructor.edgePriorization(edge, verticesValues));
               });
               availableQueue[vertice] = [];
             }

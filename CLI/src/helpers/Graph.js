@@ -16,8 +16,8 @@ class Graph {
 
   // Add edge (= rule) between two vertices (= facts)
   addEdge(edge) {
-    if (!this.edges[edge.to]) this.addVertex(edge.to, false);
-    this.edges[edge.to].push(edge);
+    if (!this.edges[edge.assignedTo]) this.addVertex(edge.assignedTo, false);
+    this.edges[edge.assignedTo].push(edge);
   }
 
   // Set all edges as unvisited
