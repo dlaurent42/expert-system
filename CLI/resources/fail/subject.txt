@@ -1,0 +1,14 @@
+C => E
+A + B + C => D
+A | B => C
+A + !B => F
+V ^ W => X
+C | !G => H
+C | G => X + V
+E + F => !V
+A + B => C
+# A + B => !C
+
+=ABG
+
+?GVXC

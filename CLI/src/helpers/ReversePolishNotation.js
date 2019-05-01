@@ -74,11 +74,11 @@ const isValidOperator = (lastCharType, char) => {
   return operator;
 };
 
-const evaluateRPN = (brutRule, values) => {
+const evaluateRPN = (brutRule, values, negation) => {
 
   // Copy input rule
-  const rule = brutRule.map(el => ((isToken(el)) ? values[el] : el));
-  console.log(rule);
+  const rule = brutRule.map(el => ((isToken(el)) ? values[el].value : el));
+
   // Solving loop
   while (rule.length > 1) {
 
@@ -89,28 +89,25 @@ const evaluateRPN = (brutRule, values) => {
       // Check if there is a negation
       if (typeof rule[idx] === 'boolean' && rule[idx + 1] === '!') {
 
-        console.log('Negation found');
-        rule[idx] = !rule[idx + 1];
+        rule[idx] = !rule[idx];
         rule.splice(idx + 1, 1);
         break;
 
       // Check if there is an operator
-      } else if (typeof rule[idx] === 'boolean' && typeof rule[idx + 1] === 'boolean' && typeof rule[idx + 2] !== 'boolean') {
-        console.log('Operator found');
+      } else if (typeof rule[idx] === 'boolean' && typeof rule[idx + 1] === 'boolean' && typeof rule[idx + 2] !== 'boolean' && rule[idx + 2] !== '!') {
+
+        // Identify operator
         if (rule[idx + 2] === '|') rule[idx] = rule[idx] || rule[idx + 1];
         else if (rule[idx + 2] === '+') rule[idx] = rule[idx] && rule[idx + 1];
         else if (rule[idx + 2] === '^') {
           rule[idx] = ((rule[idx] && !rule[idx + 1]) || (!rule[idx] && rule[idx + 1]));
-        } else console.log(`Euuuuuh... ${rule[idx + 2]}`);
+        }
         rule.splice(idx + 1, 2);
         break;
-      } else {
-        console.log('Other');
-        idx += 1;
-      }
+      } else idx += 1;
     }
   }
-  return rule[0];
+  return (negation) ? !rule[0] : rule[0];
 };
 
 class ReversePolishNotation {
@@ -208,11 +205,6 @@ class ReversePolishNotation {
 
     // Get unique tokens
     this.uniqueTokens = [...[...new Set(input.replace(/[\W_]+/g, '').split(''))].sort()];
-  }
-
-  print() {
-    if (this.error) console.log('Please note errors have been found when transforming.');
-    console.log(this.output.join(' '));
   }
 }
 

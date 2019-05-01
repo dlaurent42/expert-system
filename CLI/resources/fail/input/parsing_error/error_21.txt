@@ -1,0 +1,12 @@
+#comment tests
+
+A + B => C#comment tests
+
+=ABC #comment tests
+#Comment tests
+
+?BCA #comment tests
+
+#comment tests
+#comment tests
+#comment tests

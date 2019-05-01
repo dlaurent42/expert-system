@@ -19,13 +19,6 @@ class Graph {
     if (!this.edges[edge.assignedTo]) this.addVertex(edge.assignedTo, false);
     this.edges[edge.assignedTo].push(edge);
   }
-
-  // Set all edges as unvisited
-  resetVisits() {
-    Object.values(this.edges).forEach((edge) => {
-      edge.map(rule => Object.assign(rule, { visited: false }));
-    });
-  }
 }
 
 module.exports = Graph;

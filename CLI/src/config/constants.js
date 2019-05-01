@@ -9,11 +9,15 @@ const ERRORS = {
   PARSING_MALFORMED_LINE: template`[ Error ] Malformed line (line: ${'line'}).`,
   PARSING_RULE: template`[ Error ] Malformed rule (line: ${'line'}).`,
   PARSING_IMPLICATION: template`[ Error ] Malformed implication (line: ${'line'}).`,
+  PARSING_NO_QUERIES: '[ Error ] Queries are missing',
+  SOLVING_CONFLICT: template`[ Error ] A conflict has been detected when evaluating ${'variable'}.`,
 };
 
 const WARNINGS = {
-  PARSING_SAME_QUERIES: template`[ Warning ]Duplicates found in queries (line: ${'line'}).`,
-  PARSING_SAME_INIT_FACTS: template`[ Warning ]Duplicated found in initial facts (line: ${'line'}).`,
+  PARSING_SAME_QUERIES: template`[ Warning ] Duplicates found in queries (line: ${'line'}).`,
+  PARSING_SAME_INIT_FACTS: template`[ Warning ] Duplicates found in initial facts (line: ${'line'}).`,
+  PARSING_NO_RULE: '[ Warning ] No rule found.',
+  PARSING_NO_INITIAL_FACT: '[ Warning ] No initial fact found.',
 };
 
 module.exports = { ERRORS, WARNINGS };

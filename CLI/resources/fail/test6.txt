@@ -1,0 +1,8 @@
+A + B + C + D => E
+A => B
+F + C => D
+
+=
+?E
+
+# only horn clauses

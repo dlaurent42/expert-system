@@ -1,0 +1,4 @@
+A => B | C #if accepts or in conclusion should be undefined
+=A
+
+?BCA

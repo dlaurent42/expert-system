@@ -1,0 +1,8 @@
+!A + B | C ^ D => !E + F + C + D
+
+=BF
+
+?ABCDEF
+
+
+# pb lie a la scission trop tot de la regle en 2 ?

@@ -1,0 +1,12 @@
+A + B => C
+!E => A
+E => B
+!F => G
+G => E
+G => A
+!E => F
+# en rajoutant cette commande change en fonction de l'ordre des regles -> c est parceque systeme non complet.
+# 2 equilibres possibles
+
+=
+?ABEFGC

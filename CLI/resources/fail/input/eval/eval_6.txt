@@ -1,0 +1,9 @@
+B + C => A
+D ^ E => B
+B => C
+
+=
+
+?A
+
+# dans rotate pk pas commencer par not queries

@@ -12,6 +12,7 @@
     "ecmaVersion": 8
   },
   "rules": {
+    "no-loop-func": "off",
     "no-console": "off",
     "padded-blocks": "off",
     "comma-dangle": ["error", {

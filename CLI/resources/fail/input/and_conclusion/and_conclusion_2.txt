@@ -1,0 +1,7 @@
+A => !B + C
+
+=AB
+
+?ABC
+
+# exit quand contradiction
