@@ -132,6 +132,7 @@ class ExpertSystem {
     });
 
     // Look for errors
+    if (this.queries.length === 0) queriesEncountered = false;
     if (queriesEncountered === false) this.errors.push(ERRORS.PARSING_NO_QUERIES);
     if (rulesEncountered === false) this.warnings.push(WARNINGS.PARSING_NO_RULE);
     if (initialFactsEncountered === false) this.warnings.push(WARNINGS.PARSING_NO_INITIAL_FACT);

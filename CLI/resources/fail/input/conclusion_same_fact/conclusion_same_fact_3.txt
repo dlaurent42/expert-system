@@ -1,8 +1,0 @@
-A => C + D
-B => D + E
-C + E => !A
-
-
-=B
-
-?ABCDE

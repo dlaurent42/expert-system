@@ -1,8 +1,0 @@
-!A => A
-
-=
-
-?A
-
-
-# etrange aussi pourquoi A pas vrai

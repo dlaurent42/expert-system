@@ -33,14 +33,14 @@ const getUserChoices = () => (
 // Function used to prepare environment
 const prepareEnv = directories => (
   new Promise(async (resolve) => {
-    console.log('Preparing environment');
+    console.log('\n\x1b[1mPreparing environment\x1b[0m');
     let command = 'mkdir -p ./logs/; rm -rf ./logs/*';
     directories.forEach((dir) => {
       command += `; mkdir -p ./logs/${dir}/`;
     });
     await exec(command);
     setTimeout(() => {
-      console.log('Environment ready');
+      console.log('\x1b[3m... environment ready\x1b[0m');
       return resolve(directories);
     }, 500);
   })
@@ -48,6 +48,9 @@ const prepareEnv = directories => (
 
 // Function looping through test files and solving systems
 const solveFiles = (directories) => {
+
+  // Message
+  console.log('\x1b[1m\n------ Starting tests ------\n\x1b[0m');
 
   // Loop through directories
   directories.forEach((dir) => {
@@ -58,12 +61,12 @@ const solveFiles = (directories) => {
     if (files.length === 0) return;
 
     // Message
-    console.log(`\nTesting '${dir.toUpperCase()}':`);
+    console.log(`\nTesting '\x1b[1m${dir.toUpperCase()}\x1b[0m':\n`);
 
     // Loop through files in tests current directory
     files.forEach((file) => {
 
-      // Create an error indicator
+      // Create error and warning indicators
       let error = false;
 
       // Create a variable containing filename
@@ -84,7 +87,6 @@ const solveFiles = (directories) => {
       if (ExpertSystemInstance.warnings.length) {
         fs.appendFileSync(filename, `\n${ExpertSystemInstance.warnings.length} Warning(s) raised during parsing\n`, 'utf8');
         fs.appendFileSync(filename, ExpertSystemInstance.warnings, 'utf8');
-        error = true;
       }
 
       // Check if any error has been raised during parsing
@@ -116,12 +118,15 @@ const solveFiles = (directories) => {
         });
       }
 
-      if (error === false) console.log(`\x1b[32mV\x1b[0m ${file}`);
-      else console.log(`\x1b[31mX\x1b[0m ${file}`);
+      if (error === false && solutions[file]) console.log(`  \x1b[32mV\x1b[0m  \x1b[2m${file}\x1b[0m`);
+      else if (error === false) console.log(`  \x1b[34m?\x1b[0m  \x1b[2m${file}\x1b[0m`);
+      else console.log(`  \x1b[31mX\x1b[0m  \x1b[2m${file}\x1b[0m`);
     });
 
   });
 
+  // Message
+  console.log('\x1b[1m\n------- End of tests -------\n\x1b[0m');
 };
 
 getUserChoices()
