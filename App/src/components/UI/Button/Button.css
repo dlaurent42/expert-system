@@ -1,0 +1,32 @@
+.Button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px;
+  margin: 10px;
+  font-weight: bold;
+  opacity: 0.65;
+  -webkit-transition: opacity 1s;
+	transition: opacity 1s;
+}
+
+.Button:hover {
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+	transition: opacity 1s;
+}
+
+.Validate {
+  color: #66738C;
+}
+
+.Cancel {
+  color: #FB2441;
+  color: #E32842;
+}
+.Validate:hover, .Cancel:hover {
+  transform: scale(1.2, 1.2);
+	transition: transform 0.8s;  
+}

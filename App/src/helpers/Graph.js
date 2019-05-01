@@ -1,6 +1,5 @@
 // This class handles all data and methods relative to a graph construction
 class Graph {
-
   // Variables relative to instanciation
   constructor() {
     this.vertices = {};
@@ -21,4 +20,4 @@ class Graph {
   }
 }
 
-module.exports = Graph;
+export default Graph;

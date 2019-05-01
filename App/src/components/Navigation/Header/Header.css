@@ -1,0 +1,33 @@
+.App-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10vh;
+  width: 100vw;
+  font-size: 4vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.App-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 10vh;
+}
+
+.App-title, .App-menu {
+  padding: 20px 40px;
+}
+
+@media (max-width: 500px) {
+  .App-title {
+    display: none;
+  }
+
+  .App-menu {
+    font-size: 2.4rem;
+    width: 100vw;
+    padding: 0 20px;
+  }
+}

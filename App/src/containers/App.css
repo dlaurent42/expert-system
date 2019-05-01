@@ -1,0 +1,112 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  flex: 1;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.App-container {
+  position: absolute;
+  top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  height: 86vh;
+}
+
+.App-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 20px 20px;
+  border-radius: 30px 0px 30px 30px;
+  border: 1px solid rgb(40, 44, 52);
+  border: 1px solid rgba(40, 44, 52, 0.3);
+  box-shadow: 3px 3px rgb(80, 84, 92);
+  position: absolute;
+  top: 10vh;
+  z-index: 99;
+}
+
+.App-modal .Cancel   {
+  display: none;
+}
+
+.App-modal-show {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: height 1s, opacity 1s;
+	transition: height 1s, opacity 1s;
+}
+
+.App-modal-hide {
+  height: 0;
+  opacity: 0;
+  visibility: hidden; 
+}
+
+.App-mask {
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(40, 44, 52);
+  background-color: rgba(40, 44, 52, 0.98);
+}
+
+.App-link,
+.App-link:active,
+.App-link:visited {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.App-link:hover {
+  color: white;
+}
+
+.Animated-gif ._1Oq2CtPF8ivpXu9fIdM3cH,
+.Animated-gif ._1Q-28QiIbiMcgz_OiDW2hh {
+ overflow: hidden;
+}
+
+@media (max-width: 500px) {
+
+  .App-modal {
+    background-color: white;
+    padding: 0;
+    position: fixed;
+    border: none;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+  }
+
+  .App-modal .Cancel {
+    margin: 0 auto;
+    display: flex;
+    font-size: 45px;
+  }
+}

@@ -1,0 +1,9 @@
+.Radio-input {
+  cursor: pointer;
+  display: flex;
+  min-width: 100px;
+  justify-content: space-between;
+}
+.Radio-input input {
+  display: none;
+}

@@ -1,0 +1,9 @@
+.Checkbox-input {
+  cursor: pointer;
+  display: flex;
+  min-width: 100px;
+  justify-content: space-between;
+}
+.Checkbox-input input {
+  display: none;
+}
