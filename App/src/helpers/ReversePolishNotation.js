@@ -208,4 +208,4 @@ class ReversePolishNotation {
   }
 }
 
-export default { ReversePolishNotation, evaluateRPN };
+export { ReversePolishNotation, evaluateRPN };

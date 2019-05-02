@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash';
 
 // Helpers
 import Tree from './Tree';
+import Graph from './Graph';
 import { ReversePolishNotation, evaluateRPN } from './ReversePolishNotation';
 
 // Constants
@@ -13,6 +14,7 @@ class ExpertSystem {
 
   // Variables relative to instanciation
   constructor() {
+    this.Graph = new Graph();
     this.rules = [];
     this.queries = [];
     this.variables = [];
@@ -146,16 +148,37 @@ class ExpertSystem {
       });
   }
 
-  // Method used to solve system and assess queries
-  solveSystem() {
+  // Method used to build trees and graph
+  build() {
 
-    // Loop through queries
+    // Build trees
     this.queries.forEach((query) => {
 
       // Build tree based on data
       const tree = new Tree(query, [...this.rules], [...this.variables]);
       tree.build();
       this.trees.push(tree);
+
+    });
+
+    // Build Graph vertices
+    this.variables.forEach((variable) => {
+      Object.entries(variable).forEach((entry) => {
+        const [key, value] = entry;
+        this.Graph.addVertex(key, value);
+      });
+    });
+
+    // Build Graph edges
+    this.rules.forEach(rule => this.Graph.addEdge(rule));
+
+  }
+
+  // Method used to solve system and assess queries
+  solveSystem() {
+
+    // Loop through queries
+    this.trees.forEach((tree) => {
 
       // Check wheter tree is empty or not
       if (tree.length === 0) {
@@ -189,12 +212,25 @@ class ExpertSystem {
         });
 
         // Decrease level by one
-        tree.lvlMax -= 1;
+        Object.assign(tree, { lvlMax: tree.lvlMax - 1 });
       }
 
       // Push solution
       this.solutions[tree.query] = tree.variables[tree.query].value;
     });
+  }
+
+  // Method used to reset system
+  reset() {
+    this.Graph = new Graph();
+    this.rules = [];
+    this.queries = [];
+    this.variables = [];
+    this.initialFacts = [];
+    this.errors = [];
+    this.warnings = [];
+    this.solutions = {};
+    this.trees = [];
   }
 }
 
