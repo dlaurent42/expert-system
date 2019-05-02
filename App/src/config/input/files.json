@@ -1,0 +1,43 @@
+{
+  "and": [
+    "and_01",
+    "and_02"
+  ],
+  "brackets": [
+    "brackets_01",
+    "brackets_02",
+    "brackets_03",
+    "brackets_04",
+    "brackets_05",
+    "brackets_06",
+    "brackets_07",
+    "brackets_08",
+    "brackets_09",
+    "brackets_10",
+    "brackets_11"
+  ],
+  "conclusions": [
+    "conclusions_01",
+    "conclusions_02",
+    "conclusions_03",
+    "conclusions_04"
+  ],
+  "negation": [
+    "negation_01",
+    "negation_02",
+    "negation_03",
+    "negation_04"
+  ],
+  "or": [
+    "or_01",
+    "or_02",
+    "or_03",
+    "or_04"
+  ],
+  "xor": [
+    "xor_01",
+    "xor_02",
+    "xor_03",
+    "xor_04"
+  ]
+}
