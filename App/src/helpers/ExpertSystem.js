@@ -1,9 +1,14 @@
 // Modules
-import { isEmpty } from 'lodash';
+import {
+  isEmpty,
+  find,
+  uniqBy,
+  uniqWith,
+  isEqual,
+} from 'lodash';
 
 // Helpers
 import Tree from './Tree';
-import Graph from './Graph';
 import { ReversePolishNotation, evaluateRPN } from './ReversePolishNotation';
 
 // Constants
@@ -14,7 +19,6 @@ class ExpertSystem {
 
   // Variables relative to instanciation
   constructor() {
-    this.Graph = new Graph();
     this.rules = [];
     this.queries = [];
     this.variables = [];
@@ -22,11 +26,10 @@ class ExpertSystem {
     this.errors = [];
     this.warnings = [];
     this.solutions = {};
-    this.trees = [];
   }
 
-  // Method taking file content as input and setting up problem
-  parseSystem(fileContent) {
+  // Method used to do everything except coffee (parse file content, build trees and solve)
+  create(fileContent) {
 
     // Verify wheter file content is empty or not
     if (isEmpty(fileContent)) {
@@ -122,6 +125,7 @@ class ExpertSystem {
           this.rules.push({
             ruleId: this.rules.length,
             assignedTo: (isNegative) ? implication[1] : implication[0],
+            originalRule: splittedLine[0].trim(),
             rpnOperation: RPN.output,
             variablesInvolved: RPN.uniqueTokens,
             isNegative,
@@ -146,39 +150,13 @@ class ExpertSystem {
         if (this.initialFacts.includes(variable)) return { [variable]: true };
         return { [variable]: false };
       });
-  }
 
-  // Method used to build trees and graph
-  build() {
-
-    // Build trees
+    // Loop through queries
     this.queries.forEach((query) => {
 
       // Build tree based on data
       const tree = new Tree(query, [...this.rules], [...this.variables]);
       tree.build();
-      this.trees.push(tree);
-
-    });
-
-    // Build Graph vertices
-    this.variables.forEach((variable) => {
-      Object.entries(variable).forEach((entry) => {
-        const [key, value] = entry;
-        this.Graph.addVertex(key, value);
-      });
-    });
-
-    // Build Graph edges
-    this.rules.forEach(rule => this.Graph.addEdge(rule));
-
-  }
-
-  // Method used to solve system and assess queries
-  solveSystem() {
-
-    // Loop through queries
-    this.trees.forEach((tree) => {
 
       // Check wheter tree is empty or not
       if (tree.length === 0) {
@@ -222,7 +200,6 @@ class ExpertSystem {
 
   // Method used to reset system
   reset() {
-    this.Graph = new Graph();
     this.rules = [];
     this.queries = [];
     this.variables = [];
@@ -231,6 +208,64 @@ class ExpertSystem {
     this.warnings = [];
     this.solutions = {};
     this.trees = [];
+  }
+
+  // Method used to get data to draw graph
+  drawGraph(method) {
+
+    // Declare variables which will contain data
+    const nodes = [];
+    const links = [];
+
+    // Method general permits to draw entire graph
+    if (method === 'General') {
+
+      // Push nodes
+      Object.keys(this.variables[0]).forEach((id) => {
+        if (this.queries.includes(id)) nodes.push({ id, symbolType: 'square', color: 'red' });
+        else nodes.push({ id });
+      });
+
+      // Push links
+      this.rules.forEach((rule) => {
+        rule.variablesInvolved.forEach(source => links.push({
+          source,
+          target: rule.assignedTo,
+          label: rule.originalRule
+        }));
+      });
+
+      return { nodes, links };
+    }
+
+    // Other methods are dedicated to a specific query
+
+    // At least, one node exists (the method itself)
+    nodes.push({ id: method });
+
+    // Create a tree
+    const tree = new Tree(method, [...this.rules], [...this.variables]);
+    tree.build();
+
+    // Verify tree length
+    if (tree.length === 0) return { nodes, links };
+
+    // Loop through tree branches
+    tree.branches.forEach((branch) => {
+
+      if (branch.lvl === 0) return;
+
+      nodes.push({ id: branch.originalRule });
+
+      const source = branch.originalRule;
+      const target = (branch.lvl === 1)
+        ? method : find(tree.branches, { branchId: branch.parentId }).originalRule;
+      const label = `Level ${branch.lvl}`;
+      links.push({ source, target, label });
+
+    });
+
+    return { nodes: uniqBy(nodes, 'id'), links: uniqWith(links, isEqual) };
   }
 }
 

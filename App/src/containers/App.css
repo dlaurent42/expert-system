@@ -15,14 +15,13 @@
 
 .App-container {
   position: absolute;
-  top: 10vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  top: 0;
+  right: 0;
   min-width: 100vw;
-  height: 86vh;
+  height: 100vh;
+  overflow: hidden;
 }
+
 
 .App-modal {
   display: flex;
@@ -39,7 +38,7 @@
   z-index: 99;
 }
 
-.App-modal .Cancel   {
+.App-modal .Cancel {
   display: none;
 }
 
