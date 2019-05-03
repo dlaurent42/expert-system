@@ -153,7 +153,18 @@ const INPUT_FILES_CONTENT = {
   xor_04: '# RULES\nB + C => A \nD ^ E => B \nB => C \n\n# QUERIES\n?A \n\n# INITIAL FACTS\n=DE\n\n# EXPECTED RESULT: A should be false. '
 };
 
+const ICONS = {
+  FILE: 'file',
+  EYE: 'eye',
+  GRAPH: 'share-alt',
+  VALIDATE: 'check',
+  CANCEL: 'times',
+  CHECKBOX: 'check-square',
+  EMPTYCHECKBOX: 'square',
+};
+
 export {
+  ICONS,
   ERRORS,
   WARNINGS,
   GRAPH_CONFIG,

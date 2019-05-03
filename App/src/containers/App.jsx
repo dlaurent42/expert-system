@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // Components
-// import Header from '../components/Navigation/Header/Header';
+import Header from '../components/Navigation/Header/Header';
 import Footer from '../components/Navigation/Footer/Footer';
 import Graph from '../components/Graph/Graph';
 
@@ -22,12 +22,17 @@ class App extends Component {
     ExpertSystem: new ExpertSystem(),
 
     // Data relative to graph display
+    graphDisplay: true,
     graphDisplayMethod: 'General',
     graphDisplayData: { nodes: [], links: [] },
 
     // Data relative to window
     height: window.height,
     width: window.width,
+
+    // Data relative to menu
+    displayFilesList: false,
+    displayNetworksList: false,
 
   };
 
@@ -47,7 +52,7 @@ class App extends Component {
     // Pick a random file
     const file = files[Math.floor(Math.random() * files.length)];
 
-    console.log(`Selected file: ${file}`);
+    console.log(`Selected file: ${file}`); // DEBUG
 
     // Get file content based on file name
     let fileContent = '';
@@ -56,8 +61,8 @@ class App extends Component {
       if (key === file) fileContent = value;
     });
 
-    console.log(`File content:\n${fileContent}`);
-    console.log(`Width: ${window.innerWidth}, Height: ${window.innerHeight}`);
+    console.log(`File content:\n${fileContent}`); // DEBUG
+    console.log(`Width: ${window.innerWidth}, Height: ${window.innerHeight}`); // DEBUG
 
     // Create expert system
     this.state.ExpertSystem.create(fileContent);
@@ -71,16 +76,34 @@ class App extends Component {
     }));
   }
 
+  // Event listener(s)
   updateDimensions = () => {
+    const { graphDisplay } = this.state;
     this.setState({
+      graphDisplay: false,
       height: window.innerHeight,
       width: window.innerWidth
-    });
+    }, () => this.setState({ graphDisplay }));
+  }
+
+  // Display handlers
+  showFilesList = () => {
+    this.setState(prevState => ({
+      displayFilesList: !prevState.displayFilesList,
+      displayNetworksList: false,
+    }), () => this.updateDimensions());
+  }
+
+  showNetworksList = () => {
+    this.setState(prevState => ({
+      displayFilesList: false,
+      displayNetworksList: !prevState.displayNetworksList,
+    }), () => this.updateDimensions());
   }
 
   // Rendering
   render() {
-    const graph = (this.state.graphDisplayData.nodes.length)
+    const graph = (this.state.graphDisplay && this.state.graphDisplayData.nodes.length)
       ? (
         <Graph
           data={this.state.graphDisplayData}
@@ -91,7 +114,12 @@ class App extends Component {
     if (graph) console.log('Graph to display');
     return (
       <div className="App">
-        {/* <Header /> */}
+        <Header
+          displayFilesList={this.state.displayFilesList}
+          displayNetworksList={this.state.displayNetworksList}
+          showFilesList={this.showFilesList}
+          showNetworksList={this.showNetworksList}
+        />
         <div className="App-container">
           {graph}
         </div>

@@ -221,9 +221,14 @@ class ExpertSystem {
     if (method === 'General') {
 
       // Push nodes
+      console.log(this.solutions);
       Object.keys(this.variables[0]).forEach((id) => {
-        if (this.queries.includes(id)) nodes.push({ id, symbolType: 'square', color: 'red' });
-        else nodes.push({ id });
+        if (this.queries.includes(id)) {
+          Object.entries(this.solutions).forEach((entry) => {
+            const [key, value] = entry;
+            if (key === id) nodes.push({ id, symbolType: 'square', color: (value) ? 'green' : 'red' });
+          });
+        } else nodes.push({ id });
       });
 
       // Push links
@@ -241,7 +246,10 @@ class ExpertSystem {
     // Other methods are dedicated to a specific query
 
     // At least, one node exists (the method itself)
-    nodes.push({ id: method });
+    Object.entries(this.solutions).forEach((entry) => {
+      const [key, value] = entry;
+      if (key === method) nodes.push({ id: method, symbolType: 'square', color: (value) ? 'green' : 'red' });
+    });
 
     // Create a tree
     const tree = new Tree(method, [...this.rules], [...this.variables]);

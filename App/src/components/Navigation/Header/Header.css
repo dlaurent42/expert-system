@@ -7,6 +7,7 @@
   font-size: 4vh;
   display: flex;
   justify-content: space-between;
+  z-index: 99;
 }
 
 .App-title {

@@ -4,38 +4,26 @@ import './index.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faUpload,
-  faPlay,
-  faRandom,
-  faSlidersH,
-  faPalette,
-  faArrowCircleLeft,
-  faArrowCircleRight,
+  faFile,
+  faEye,
+  faShareAlt,
   faCheck,
   faTimes,
-  faSquare,
   faCheckSquare,
-  faChartBar,
-  faEgg,
+  faSquare,
 } from '@fortawesome/free-solid-svg-icons';
 
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 
 library.add(
-  faUpload,
-  faPlay,
-  faRandom,
-  faSlidersH,
-  faPalette,
-  faArrowCircleLeft,
-  faArrowCircleRight,
+  faFile,
+  faEye,
+  faShareAlt,
   faCheck,
   faTimes,
-  faSquare,
   faCheckSquare,
-  faChartBar,
-  faEgg,
+  faSquare,
 );
 
 ReactDOM.render(<App />, document.getElementById('root'));
