@@ -1,0 +1,25 @@
+.Networks {
+  display: flex;
+  flex-direction: column;
+  right: 60px;
+}
+
+.Networks label {
+  justify-content: space-between;
+  width: 200px;
+  font-size: 25px;
+  line-height: 25px;
+  padding: 12px;
+  border-radius: 1px;
+  background-color: rgba(40, 44, 52, 0);
+  color: rgb(40, 44, 52);
+  -webkit-transition: border-radius 1s, background-color 1s;
+	transition: border-radius 1s, background-color 1s;
+}
+
+.Networks label:hover {
+  border-radius: 12px;
+  background-color: rgba(40, 44, 52, 0.1);
+  -webkit-transition: border-radius 1s, background-color 1s;
+	transition: border-radius 1s, background-color 1s;
+}

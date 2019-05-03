@@ -3,16 +3,11 @@ import PropTypes from 'prop-types';
 
 import './Form.css';
 
-const form = (props) => {
-  const classes = ['App-modal', 'App-form', ...props.classNames];
-  if (props.show) classes.push('App-modal-show');
-  else classes.push('App-modal-hide');
-  return (
-    <form className={classes.join(' ')}>
-      {props.children}
-    </form>
-  );
-};
+const form = props => (
+  <form className={['App-modal', 'App-form', ...props.classNames].concat((props.show) ? 'App-modal-show' : 'App-modal-hide').join(' ')}>
+    {props.children}
+  </form>
+);
 
 form.propTypes = {
   show: PropTypes.bool,

@@ -6,7 +6,7 @@ import './Button.css';
 const button = props => (
   <button
     type={props.btnType}
-    className={['Button', props.btnAttr].join(' ')}
+    className={['Button'].concat(props.btnClassNames).join(' ')}
     onClick={props.onClick}
   >
     {props.children}
@@ -15,13 +15,14 @@ const button = props => (
 
 button.propTypes = {
   btnType: PropTypes.string,
-  btnAttr: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  btnClassNames: PropTypes.arrayOf(PropTypes.string),
+  onClick: PropTypes.func,
 };
 
 button.defaultProps = {
   btnType: 'submit',
-  btnAttr: '',
+  btnClassNames: [],
+  onClick: () => { },
 };
 
 export default button;

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // Components
 import Header from '../components/Navigation/Header/Header';
 import Footer from '../components/Navigation/Footer/Footer';
+import Networks from '../components/Navigation/Menu/Networks';
 import Graph from '../components/Graph/Graph';
 
 // Helpers
@@ -101,16 +102,31 @@ class App extends Component {
     }), () => this.updateDimensions());
   }
 
+  // Click menu handlers
+  onNetworkChange = (e) => {
+    e.preventDefault();
+    const graphDisplayMethod = e.target.value;
+    if (graphDisplayMethod === this.state.graphDisplayMethod) return;
+    this.setState(prevState => ({
+      graphDisplay: false,
+      graphDisplayData: prevState.ExpertSystem.drawGraph(graphDisplayMethod),
+      graphDisplayMethod,
+      displayNetworksList: false,
+    }), () => this.setState({ graphDisplay: true }));
+  }
+
   // Rendering
   render() {
-    const graph = (this.state.graphDisplay && this.state.graphDisplayData.nodes.length)
+    const graph = (this.state.graphDisplay
+      && this.state.graphDisplayData.nodes.length
+      && this.state.graphDisplayData.links)
       ? (
         <Graph
           data={this.state.graphDisplayData}
           height={this.state.height}
           width={this.state.width}
         />
-      ) : null;
+      ) : <div>No enough data to draw graph.</div>;
     if (graph) console.log('Graph to display');
     return (
       <div className="App">
@@ -119,7 +135,15 @@ class App extends Component {
           displayNetworksList={this.state.displayNetworksList}
           showFilesList={this.showFilesList}
           showNetworksList={this.showNetworksList}
-        />
+        >
+          <Networks
+            show={this.state.displayNetworksList}
+            close={this.showFilesList}
+            queries={this.state.ExpertSystem.queries}
+            selectedNetword={this.state.graphDisplayMethod}
+            onNetworkChange={this.onNetworkChange}
+          />
+        </Header>
         <div className="App-container">
           {graph}
         </div>
