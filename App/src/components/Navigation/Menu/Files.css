@@ -1,8 +1,10 @@
 .Files {
+  position: fixed !important;
   display: flex;
   flex-direction: column;
   right: 60px;
   color: rgb(40, 44, 52);
+  overflow-y: scroll;
 }
 
 .FilesSublist label {
