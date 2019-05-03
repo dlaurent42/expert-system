@@ -146,6 +146,7 @@ class App extends Component {
       graphDisplay: false,
       graphDisplayMethod: 'General',
       graphDisplayData: prevState.ExpertSystem.drawGraph('General'),
+      displayFileView: false,
       displayFilesList: false,
     }), () => this.setState({ graphDisplay: true }));
   }

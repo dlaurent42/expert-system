@@ -101,6 +101,10 @@ const INPUT_FILES_LIST = {
     'conclusions_03',
     'conclusions_04'
   ],
+  'dbl implication': [
+    'dbl_implication_01',
+    'dbl_implication_02'
+  ],
   negation: [
     'negation_01',
     'negation_02',
@@ -139,6 +143,8 @@ const INPUT_FILES_CONTENT = {
   conclusions_02: '# RULES\nB => A \nC => A \n\n# QUERIES\n?A \n\n# INITIAL FACTS\n=B\n\n# EXPECTED RESULT: A should be true. ',
   conclusions_03: '# RULES\nB => A \nC => A \n\n# QUERIES\n?A \n\n# INITIAL FACTS\n=C\n\n# EXPECTED RESULT: A should be true. ',
   conclusions_04: '# RULES\nB => A \nC => A \n\n# QUERIES\n?A \n\n# INITIAL FACTS\n=BC\n\n# EXPECTED RESULT: A should be true. ',
+  dbl_implication_01: '# RULES\n!A <=> C\nB => C\n\n# INITIAL FACTS\n=B\n\n# QUERIES\n?ABC\n\n# EXPECTED RESULT: A is false BC is true.',
+  dbl_implication_02: '# RULES\nA <=> C\nB => C\n\n# QUERIES\n?ABC\n\n# INITIAL FACTS\n=B\n\n# EXPECTED RESULT: ABC is true.',
   negation_01: '# RULES\nB + !C => A \n\n# QUERIES\n?A \n\n# INITIAL FACTS\n=\n\n# EXPECTED RESULT: A should be false. ',
   negation_02: '# RULES\nB + !C => A \n\n# QUERIES\n?A \n\n# INITIAL FACTS\n=B\n\n# EXPECTED RESULT: A should be true. ',
   negation_03: '# RULES\nB + !C => A \n\n# QUERIES\n?A \n\n# INITIAL FACTS\n=C\n\n# EXPECTED RESULT: A should be false. ',

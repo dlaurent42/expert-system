@@ -75,7 +75,7 @@ class ExpertSystem {
         // Modify queriesEncountered indicator
         queriesEncountered = true;
 
-      // Initial facts
+        // Initial facts
       } else if (parsedLine.startsWith('=') && initialFactsEncountered) this.errors.push(ERRORS.PARSING_MULTIPLE_INIT_FACTS({ line: linesCounter }));
       else if (parsedLine.startsWith('=')) {
 
@@ -93,11 +93,12 @@ class ExpertSystem {
         // Modify initialFactsEncountered indicator
         initialFactsEncountered = true;
 
-      // Rules
+        // Rules
       } else {
 
         // Split line
-        const splittedLine = parsedLine.split(/=>/);
+        const isDoubleImplication = parsedLine.includes('<=>');
+        const splittedLine = parsedLine.split(/<?=>/);
 
         // Check number of blocks resulting from split
         if (splittedLine.length !== 2) {
@@ -105,24 +106,30 @@ class ExpertSystem {
           return;
         }
 
-        // Get Reverse Polish Notation from left part of equation
-        const RPN = new ReversePolishNotation();
-        RPN.transform(splittedLine[0].trim());
+        // Consider double implication
+        const rules = [[splittedLine[0], splittedLine[1]]];
+        if (isDoubleImplication) rules.push([splittedLine[1], splittedLine[0]]);
+        rules.forEach((rule) => {
 
-        // Check errors
-        if (RPN.error) this.errors.push(ERRORS.PARSING_RULE({ line: linesCounter }));
+          // Get Reverse Polish Notation from left part of equation
+          const RPN = new ReversePolishNotation();
+          RPN.transform(rule[0].trim());
 
-        // Assess implications
-        splittedLine[1].replace(/ /g, '').split('+').forEach((implication) => {
-          let isNegative = false;
-          if (/^![A-Z]$/.test(implication)) isNegative = true;
-          else if (/^[A-Z]$/.test(implication) === false) this.errors.push(ERRORS.PARSING_IMPLICATION({ line: linesCounter }));
-          this.rules.push({
-            ruleId: this.rules.length,
-            assignedTo: (isNegative) ? implication[1] : implication[0],
-            rpnOperation: RPN.output,
-            variablesInvolved: RPN.uniqueTokens,
-            isNegative,
+          // Check errors
+          if (RPN.error) this.errors.push(ERRORS.PARSING_RULE({ line: linesCounter }));
+
+          // Assess implications
+          rule[1].replace(/ /g, '').split('+').forEach((implication) => {
+            let isNegative = false;
+            if (/^![A-Z]$/.test(implication)) isNegative = true;
+            else if (/^[A-Z]$/.test(implication) === false) this.errors.push(ERRORS.PARSING_IMPLICATION({ line: linesCounter }));
+            this.rules.push({
+              ruleId: this.rules.length,
+              assignedTo: (isNegative) ? implication[1] : implication[0],
+              rpnOperation: RPN.output,
+              variablesInvolved: RPN.uniqueTokens,
+              isNegative,
+            });
           });
         });
 
@@ -180,7 +187,7 @@ class ExpertSystem {
 
           // Check if there is a conflict
           if (tree.variables[branch.assignedTo].evaluated
-          && tree.variables[branch.assignedTo].value !== rpnSolution) {
+            && tree.variables[branch.assignedTo].value !== rpnSolution) {
             this.errors.push(ERRORS.SOLVING_CONFLICT({ variable: branch.assignedTo }));
           }
 

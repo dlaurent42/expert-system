@@ -1,0 +1,11 @@
+# RULES
+!A <=> C
+B => C
+
+# INITIAL FACTS
+=B
+
+# QUERIES
+?ABC
+
+# EXPECTED RESULT: A is false BC is true.
