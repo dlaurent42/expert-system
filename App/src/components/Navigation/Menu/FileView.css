@@ -1,0 +1,25 @@
+.FileView {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: left !important;
+  color: rgb(40, 44, 52) !important;
+  position: fixed !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 5px !important;
+  border: 0 !important;
+  margin: auto !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 9999 !important;
+}
+
+.FileViewContent {
+  font-size: 15px;
+  text-align: left;
+}
+
+.FileViewClose {
+  color: #E32842;
+}

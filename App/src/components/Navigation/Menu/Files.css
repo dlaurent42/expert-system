@@ -1,0 +1,61 @@
+.Files {
+  display: flex;
+  flex-direction: column;
+  right: 60px;
+  color: rgb(40, 44, 52);
+}
+
+.FilesSublist label {
+  justify-content: space-between;
+  width: 200px;
+  font-size: 25px;
+  line-height: 25px;
+  padding: 12px;
+  border-radius: 5px;
+  background-color: rgba(40, 44, 52, 0);
+  color: rgb(40, 44, 52);
+  -webkit-transition: border-radius 1s, background-color 1s;
+	transition: border-radius 1s, background-color 1s;
+}
+
+
+.FilesSublist label:hover {
+  border-radius: 12px;
+  background-color: rgba(40, 44, 52, 0.1);
+  -webkit-transition: border-radius 1s, background-color 1s;
+	transition: border-radius 1s, background-color 1s;
+}
+
+.FilesSublist .Radio-input {
+  margin: 0 5px;
+  font-size: 20px;
+  padding-left: 18px;
+  padding-right: 0;
+  color: rgba(40, 44, 52, 0.8);
+}
+
+.File {
+  display: flex;
+  flex-direction: row;
+}
+
+.ViewContent {
+  font-size: 25px;
+  padding: 12px 5px;
+  margin-left: -45px;
+  z-index: 999;
+  border-radius: 5px;
+  background-color: rgba(40, 44, 52, 0);
+  opacity: 0.7;
+  -webkit-transition: border-radius 1s, background-color 1s, opacity 1s;
+	transition: border-radius 1s, background-color 1s, opacity 1s;
+}
+
+.ViewContent:hover {
+  border-radius: 12px;
+  opacity: 1;
+  background-color: rgba(40, 44, 52, 0.1);
+  cursor: pointer;
+  -webkit-transition: border-radius 1s, background-color 1s, opacity 1s;
+	transition: border-radius 1s, background-color 1s, opacity 1s;  
+}

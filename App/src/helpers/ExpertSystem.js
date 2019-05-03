@@ -221,7 +221,6 @@ class ExpertSystem {
     if (method === 'General') {
 
       // Push nodes
-      console.log(this.solutions);
       Object.keys(this.variables[0]).forEach((id) => {
         if (this.queries.includes(id)) {
           Object.entries(this.solutions).forEach((entry) => {
@@ -261,12 +260,11 @@ class ExpertSystem {
     // Loop through tree branches
     tree.branches.forEach((branch) => {
 
-      if (branch.lvl === 0) return;
 
       nodes.push({ id: branch.originalRule });
 
       const source = branch.originalRule;
-      const target = (branch.lvl === 1)
+      const target = (branch.lvl === 0)
         ? method : find(tree.branches, { branchId: branch.parentId }).originalRule;
       const label = `Level ${branch.lvl}`;
       links.push({ source, target, label });
