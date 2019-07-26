@@ -15,13 +15,13 @@ If there is an error in the input, for example a contradiction in the facts, or 
 
 ## Features
 
-• "AND" conditions. For example, "If A and B and [...] then X"
-• "OR" conditions. For example, "If C or D then Z"
-• "XOR" conditions. For example, "If A xor E then V". Remember that this means "exclusive OR". It is only true if one and only one of the operands is true.
-• Negation. For example, "If A and not B then Y"
-• Multiple rules can have the same fact as a conclusion 
-• "AND" in conclusions. For example, "If A then B and C"
-• Parentheses in expressions. Interpreted in much the same way as an arithmetic expression.
+- "AND" conditions. For example, "If A and B and [...] then X"
+- "OR" conditions. For example, "If C or D then Z"
+- "XOR" conditions. For example, "If A xor E then V". Remember that this means "exclusive OR". It is only true if one and only one of the operands is true.
+- Negation. For example, "If A and not B then Y"
+- Multiple rules can have the same fact as a conclusion 
+- "AND" in conclusions. For example, "If A then B and C"
+- Parentheses in expressions. Interpreted in much the same way as an arithmetic expression.
 
 ## Objectives
 
